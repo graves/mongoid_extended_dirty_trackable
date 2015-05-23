@@ -30,7 +30,7 @@ module Mongoid
     end
 
     def embedded_changes
-      @embedded_changes ||= begin
+      @embedded_changes = begin
         self.collect_children.inject({}) do |memo, child|
           memo.merge!(child.changes) if child.changed?
           memo
