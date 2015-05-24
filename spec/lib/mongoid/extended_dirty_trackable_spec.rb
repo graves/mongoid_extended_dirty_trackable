@@ -1,41 +1,5 @@
 require_relative '../../spec_helper'
-require_relative '../../../lib/mongoid_extended_dirty_trackable.rb'
-require 'pry'
-
-class Account
-  include Mongoid::Document
-  include Mongoid::ExtendedDirtyTrackable
-
-  field :name
-
-  embeds_one :address
-  embeds_many :invoices
-  has_many :offices
-end
-
-class Address
-  include Mongoid::Document
-
-  field :zipcode
-
-  embedded_in :account
-end
-
-class Invoice
-  include Mongoid::Document
-
-  field :total
-
-  embedded_in :account
-end
-
-class Office
-  include Mongoid::Document
-
-  field :number
-
-  belongs_to :account
-end
+require_relative '../../models/relationships.rb'
 
 describe Mongoid::ExtendedDirtyTrackable do
   it 'has a version number' do
