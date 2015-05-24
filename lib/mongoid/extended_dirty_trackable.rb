@@ -10,10 +10,10 @@ module Mongoid
     end
 
     def associated_changes
-      @associated_changes ||= begin
+      @associated_changes = begin
         self.associations.keys.inject({}) do |memo, association|
           _changes = msg_relative(association)
-          memo.merge(_changes)
+          memo.merge!(_changes)
           memo
         end
       end
@@ -24,6 +24,10 @@ module Mongoid
 
       if relative && !relative.is_a?(Array) && relative.changed?
         _changes = relative.changes
+      elsif relative && relative.is_a?(Array) && relative.any?(&:changed)
+        _changes = relative.inject({}) do |memo, obj|
+          memo.merge!(obj.changes) if obj.changed?
+        end
       end
 
       _changes || {}
