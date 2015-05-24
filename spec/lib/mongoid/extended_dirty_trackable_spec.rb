@@ -1,12 +1,12 @@
-require_relative '../../spec_helper'
-require_relative '../../models/relationships.rb'
+require 'spec_helper'
+require 'models/relationships'
 
 describe Mongoid::ExtendedDirtyTrackable do
-  it 'has a version number' do
+  it "has a version number" do
     expect(Mongoid::ExtendedDirtyTrackable::VERSION).not_to be nil
   end
 
-  it 'it is wired in correctly' do
+  it "it is wired in correctly" do
     expect(Account.new.singleton_class < Mongoid::ExtendedDirtyTrackable)
       .to eq(true)
   end
