@@ -1,8 +1,10 @@
-# MongoidExtendedDirtyTrackable
+# Mongoid::ExtendedDirtyTrackable
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mongoid_extended_dirty_trackable`. To experiment with that code, run `bin/console` for an interactive prompt.
+A Mongoid Extension (ActiveSupport::Concern) that gives you the ability to track changes to embedded and related documents through a parent.
 
-TODO: Delete this and the text above, and describe your gem
+It was born from a need in a production app I work on from which it was extracted. If you'd like a pretty detailed run down of what exactly the code is doing you can find it on [my blog.](http://blog.ooo.pm/dirty-tracking-embedded-documents-with-mongoid/)
+
+I don't consider this Gem production ready (don't tell my boss.) Mostly because I ran into some issues when writing the specs after Gemifying the original Concern. None of these problems exist in my production app so I'm lead to believe they are the result of the _hack_ job I did setting up and tearing down mongo for the tests. I plan on working these issues out in the near future and if you'd like to know more check out my [blog post that covers them.](http://blog.ooo.pm/post-im-gonna-write-tomorrow-morning)
 
 ## Installation
 
@@ -16,24 +18,67 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself with:
 
     $ gem install mongoid_extended_dirty_trackable
 
 ## Usage
 
-TODO: Write usage instructions here
+I tried to make the specs work as documentation but for those of you averse to reading them I'll make it easy for you.
+
+```ruby
+class Account
+  include Mongoid::Document
+  include Mongoid::ExtendedDirtyTrackable
+
+  field :name
+
+  embeds_one :address
+  embeds_many :invoices
+  has_many :offices
+end
+
+account = Account.create(name: "Prestige Worldwide")
+account.name = "Umbrella Corp"
+account.changed?                             #=> true
+account.changes["name"]                      #=> ["Prestige Worldwide", "Umbrella Corp"
+
+account.create_address(zipcode: "90210")
+account.address.zipcode = "1000 AS"
+account.changed?                             #=> true
+account.changes["zipcode"]                   #=> ["90210", "1000 AS"]
+
+account.invoices.create(total: 420.00)
+account.invoices.first.total = 69.69
+account.changed?                             #=> true
+account.changes["total"]                     #=> [420.00, 69.69]
+
+office = account.offices.create(number: 666)
+office.number = 5446
+
+account.changed?                             #=> true
+account.changes["number"]                    #=> [666, 5446]
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/mongoid_extended_dirty_trackable/fork )
+All pull requests are met with open arms and gratitude.
+
+Check the TODO file or the Github Issue tracker for suggestions on where to begin.
+
+Please be sure your pull request includes descriptive commit messages and tests that cover your feature, change, or bug.
+
+1. Fork it ( https://github.com/graves/mongoid_extended_dirty_trackable/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## Similar Projects
+
+[versative/mongoid_relations_dirty_tracking](https://github.com/versative/mongoid_relations_dirty_tracking) - This is a little more full featured and much more in the direction I plan on taking but I feel like it can be done in a more simple manner with less code.
+[millisami/gist:721466](https://gist.github.com/millisami/721466) - The code in this Gist no longer works or maybe it never did but it served as the inspiration for my Gem. Thanks [millisami!](https://github.com/millisami)
