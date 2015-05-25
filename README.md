@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/graves/mongoid_extended_dirty_trackable.svg?branch=master)](https://travis-ci.org/graves/mongoid_extended_dirty_trackable)
+
 # Mongoid::ExtendedDirtyTrackable
 
 A Mongoid Extension (ActiveSupport::Concern) that gives you the ability to track changes to embedded and related documents through a parent.
