@@ -1,0 +1,9 @@
+- lib/mongoid/extended_dirty_trackable.rb could use some refactoring, at least a few method extractions
+- change @associated_changes and @embedded_changes back to being conditional assignments
+- doing the above should fix the infinite recursion bug that happens when two related classes both include the mixin
+- figure out why and fix #associated_changes and #embedded_changes returning only empty hashes when their instance variables set by conditional assignment
+- REMEMBER: ^ empty hashes are not falsey
+- setup a proper mongo instance (using the yaml config file) for tests
+- use DatabaseCleaner to clear out the db before each test
+- the above 2 might be the fix the empty hash on conditional assignment bug mentioned above
+- maybe include object id and relationship name in the changes hash or implement in seperate methods
