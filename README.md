@@ -2,11 +2,11 @@
 
 # Mongoid::ExtendedDirtyTrackable
 
-A Mongoid Extension (ActiveSupport::Concern) that gives you the ability to track changes to embedded and related documents through a parent.
+A Mongoid Extension that gives you the ability to track changes to embedded and related documents through a parent.
 
 It was born from a need in a production app I work on from which it was extracted. If you'd like a pretty detailed run down of what exactly the code is doing you can find it on [my blog.](http://blog.ooo.pm/dirty-tracking-embedded-documents-with-mongoid/)
 
-I don't consider this Gem production ready (don't tell my boss.) Mostly because I ran into some issues when writing the specs after Gemifying the original Concern. None of these problems exist in my production app so I'm lead to believe they are the result of the _hack_ job I did setting up and tearing down mongo for the tests. I plan on working these issues out in the near future and if you'd like to know more check out my [blog post that covers them.](http://blog.ooo.pm/post-im-gonna-write-tomorrow-morning)
+I don't consider this Gem production ready. Mostly because I ran into some issues when writing the specs after Gemifying the original Concern. None of these problems exist in my production app so I'm lead to believe they are the result of the _hack_ job I did setting up and tearing down mongo for the tests. I plan on working these issues out in the near future and if you'd like to know more check out my [blog post that covers them.](http://blog.ooo.pm/post-im-gonna-write-tomorrow-morning)
 
 ## Installation
 
