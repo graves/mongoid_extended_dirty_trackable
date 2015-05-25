@@ -41,7 +41,7 @@ end
 account = Account.create(name: "Prestige Worldwide")
 account.name = "Umbrella Corp"
 account.changed?                             #=> true
-account.changes["name"]                      #=> ["Prestige Worldwide", "Umbrella Corp"
+account.changes["name"]                      #=> ["Prestige Worldwide", "Umbrella Corp"]
 
 account.create_address(zipcode: "90210")
 account.address.zipcode = "1000 AS"
@@ -81,4 +81,5 @@ Please be sure your pull request includes descriptive commit messages and tests 
 ## Similar Projects
 
 [versative/mongoid_relations_dirty_tracking](https://github.com/versative/mongoid_relations_dirty_tracking) - This is a little more full featured and much more in the direction I plan on taking but I feel like it can be done in a more simple manner with less code.
+
 [millisami/gist:721466](https://gist.github.com/millisami/721466) - The code in this Gist no longer works or maybe it never did but it served as the inspiration for my Gem. Thanks [millisami!](https://github.com/millisami)
